@@ -1,19 +1,12 @@
 all: \
-#    rcma_to_reg/output/rcma_to_reg.dta
-	make_panel_rcma/output/make_panel_rcma.dta
+#	need to understand how to include locals from stata in filename
+	# event_study/output/graph_lndt_8_cut.pdf
+	# event_study/output/ev_sty_ln_stpf_norm_p90_8_cut.pdf
+	# event_study/output/graph_log_tax90_8_cut.pdf
 
 
-# rcma_to_reg/output/rcma_to_reg.dta: \
-# 	rcma_to_reg/input/make_panel_rcma.dta \
-# 	rcma_to_reg/code/rcma_to_reg.do
-#
-# 	StataMP -b do rcma_to_reg/code/rcma_to_reg.do &
+event_study/output/graph_lndt_8_cut.pdf: \
+	times_to_reg/output/times_to_reg.dta \
+	event_study/code/event_study.do
 
-
-make_panel_rcma/output/make_panel_rcma.dta: \
-	make_panel_rcma/input/clean_tax_bases.dta \
-#	make_panel_rcma/input/mkt_access_byorigin*.dta \
-#	make_panel_rcma/input/fake/mkt_access_byorigin*.dta \
-#	make_panel_rcma/code/make_panel_rcma.do
-
-	StataMP -b do make_panel_rcma/code/make_panel_rcma.do &
+	StataMP -b do rcma_to_reg/code/rcma_to_reg.do &

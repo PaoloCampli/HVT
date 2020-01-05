@@ -15,10 +15,10 @@ capture log close       // Close existing log files
 
 
 
-**** Intensity using top events in terms of rcma reduction ****
+**** Intensity using top events in terms of top5times reduction ****
 
-cd /Users/paolocampli/hw/event_study_intensity_rcma
-use input/rcmacut_to_reg.dta, clear
+cd /Users/paolocampli/hw/event_study_intensity_top5
+use input/top5times_to_reg.dta, clear
 
 
 qui: sum jahr
@@ -37,14 +37,14 @@ drop start
 gen event_zugang_p_10 = D.zugang_p_10
 
 *** Event definitions ***
-foreach v of varlist top05_log_rcma_inc top10_log_rcma_inc {
+foreach v of varlist top05_log_w_tttop5_red top10_log_w_tttop5_red  {
 	gen event_`v' = `v'
 }
 
 
 
 *** imputing missing
-foreach v of varlist top05_log_rcma_inc top10_log_rcma_inc zugang_p_10 {
+foreach v of varlist top05_log_w_tttop5_red top10_log_w_tttop5_red  zugang_p_10 {
 	replace event_`v' = . if jahr > 2015					// no hw data post 2015
 	replace event_`v' = 0 if jahr < 1955 & event_`v' == .	// no hw  at all pre 1955
 }
@@ -52,8 +52,8 @@ foreach v of varlist top05_log_rcma_inc top10_log_rcma_inc zugang_p_10 {
 
 
 *** Weighted events
-foreach v of varlist event_top05_log_rcma_inc event_top10_log_rcma_inc {
-	gen w_`v' = `v'*log_rcma_inc
+foreach v of varlist event_top05_log_w_tttop5_red event_top10_log_w_tttop5_red  {
+	gen w_`v' = `v'*log_w_tttop5_red 
 }
 
 
@@ -63,7 +63,7 @@ gen access_year = .
 bysort gdenr: replace access_year = jahr if zugang_p_10 == 1
 bysort gdenr: egen first_access = min(access_year)
 bys gdenr: gen time_window = inrange(jahr, first_access - 2, first_access + 10)
-bys gdenr: egen w_event_zugang_p_10 = total(log_rcma_inc*time_window)
+bys gdenr: egen w_event_zugang_p_10 = total(log_w_tttop5_red*time_window)
 bys gdenr: replace w_event_zugang_p_10 = w_event_zugang_p_10*event_zugang_p_10
 
 drop access_year first_access time_window
@@ -72,7 +72,7 @@ drop access_year first_access time_window
 
 
 ******* EVENT *******
-local event "event_top05_log_rcma_inc"
+local event "event_top05_log_w_tttop5_red"
 *local event "event_zugang_p_10"
 
 
@@ -223,7 +223,7 @@ else {
 
 
 local std_sample1	"zentren == 0 & agglomeration == 0 & in_zugang_p_30 == 1"
-local std_sample2	"& balanced_sample > 0"
+local std_sample2	"& balanced_sample > 0 & flag_times_issue == 0"
 local std_sample3	"& (balanced_sample > 0 | last_treat == .)"
 local std_sample	"`std_sample1' `std_sample2'"
 
@@ -240,7 +240,7 @@ forvalues y = `pre'(2)`post' {
 
 
 
-local dep_vars		"log_rcma	ln_stpf_norm_p90	log_tax90"
+local dep_vars		"log_w_tttop5	ln_stpf_norm_p90	log_tax90"
 
 
 *** Output ***

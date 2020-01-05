@@ -1,0 +1,9 @@
+# .gitignore for highways, voting and taxes
+
+*.pdf
+*.dta
+*.csv
+*.DS_Store
+*.log
+*.png
+*\/output\/*

@@ -1,0 +1,26 @@
+digraph G {
+/Users/paolocampli/iCloud -> adjust_id
+/Users/paolocampli/iCloud -> gen_fake_rcma
+/Users/paolocampli/iCloud -> gen_fake_times
+/Users/paolocampli/iCloud -> gen_fake_times
+/Users/paolocampli/hw/make_panel_rcmacut -> rcmacut_to_reg
+/Users/paolocampli/hw/new_tax_data -> rcmacut_to_reg
+/Users/paolocampli/hw/clean_tax_bases -> rcmacut_to_reg
+/Users/paolocampli/hw/rcmacut_to_reg -> event_study_intensity_rcma
+/Users/paolocampli/iCloud -> adjust_loc_names
+top5times_to_reg -> event_study_intensity_top5
+/Users/paolocampli/hw/new_tax_data -> times_to_reg
+/Users/paolocampli/hw/make_panel_times -> times_to_reg
+/Users/paolocampli/hw/clean_tax_bases -> times_to_reg
+update_gdenr -> csv_to_rcma
+/Users/paolocampli/iCloud -> csv_to_rcma
+/Users/paolocampli/iCloud -> csv_to_rcma
+/Users/paolocampli/hw/dta_to_rcma -> make_panel_rcmacut
+/Users/paolocampli/hw/dta_to_rcma -> make_panel_rcmacut
+hw/times_to_reg -> tt40_sumstat
+make_panel_top5 -> top5times_to_reg
+dta_to_top5 -> make_panel_top5
+update_gdenr -> csv_to_times
+/Users/paolocampli/hw/top5times_to_reg -> indep_reg_top5
+/Users/paolocampli/iCloud -> update_gdenr
+}
