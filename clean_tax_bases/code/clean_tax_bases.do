@@ -24,7 +24,7 @@ set maxvar 20000
 * Data *
 ********
 
-cd /Users/paolocampli/hw
+*cd /Users/paolocampli/hw
 use clean_tax_bases/input/data_Paolo.dta, clear
 
 qui: sum jahr if stpf_norm != .
@@ -68,7 +68,7 @@ gsort gdenr -jahr
 foreach var of varlist agglo zentren see dist_flughafen dist_zentrum*{
 bysort gdenr: replace `var' = `var'[_n-1] if `var' == . // missing values in first years
 }
-sort gdenr jahr 
+sort gdenr jahr
 
 *Restrict period to 2010
 drop if jahr == 2011 /* only one observation for tax base for a two-year period */
@@ -77,7 +77,7 @@ drop if jahr == 2011 /* only one observation for tax base for a two-year period 
 * Tax base : Income and Tax revenue pro inhabitant & share of top (bottom) X% (in Mio)*
 ***************************************************************************************
 
-* Share of top X% 
+* Share of top X%
 foreach var in stpf_norm{
 g s_`var'_p50_p75 = s_`var'_p50 - s_`var'_p75
 g s_`var'_p75_p90 = s_`var'_p75 - s_`var'_p90
@@ -90,7 +90,7 @@ cap g `var' = s_`var'*stpf_norm
 
 
 ***************************
-* Composition of population 
+* Composition of population
 ***************************
 
 g resemp_ed = resemp_e1 + resemp_e2 + resemp_e3
@@ -108,7 +108,7 @@ g s_linwout_`v' = linwout_`v'/linwout_ed
 }
 
 ***********
-* Use logs  
+* Use logs
 ***********
 
 foreach var of varlist s_* eink medeink eink_* stpf stpf_* stbetr stbetr_* einkst_v0k_* /* nb_firms*  nb_emp* */ ewg efh rents einwohner gini linwin* linwout* loutwin* resemp* wkpemp*{
@@ -118,7 +118,7 @@ qui: g ln_`var' = ln(`var')
 
 **************************
 * Municipalities at access
-************************** 
+**************************
 
 foreach var in zugang_p{
 generate `var'_0=0
@@ -173,12 +173,12 @@ generate alter_`type'_`d'=periode-periode_`type'_`d'
 forvalues t = 0/28 {
 generate a_`type'_`d'_plus`t' = alter_`type'_`d'==`t'
 }
-  
-* 3b. Negative ages ("run-up period"):  
+
+* 3b. Negative ages ("run-up period"):
 forvalues t = 1/31 {
 generate a_`type'_`d'_minus`t' = alter_`type'_`d'==-`t'
 }
-  
+
 ** 10 periods plus:
 generate ag_`type'_`d'_p10p=0
 replace ag_`type'_`d'_p10p=1 if alter_`type'_`d'>=10

@@ -1,7 +1,7 @@
 * 28/1/2019
 * Paolo Campli, USI
 *--------------------------------------------------
-* Changes id slightly to make it consistent with the arcgis ones 
+* Changes id slightly to make it consistent with the arcgis ones
 
 *--------------------------------------------------
 * Program Setup
@@ -14,7 +14,8 @@ macro drop _all         // clear all macros
 capture log close       // Close existing log files
 * --------------------------------------------------
 
-use "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/adjust_id/input/merge_townsbfsplz_commuting1950clean.dta", clear
+*cd /Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks
+use "adjust_id/input/merge_townsbfsplz_commuting1950clean.dta", clear
 
 
 sort name
@@ -47,5 +48,4 @@ replace id = 0 if name == "Wiler Lötschen"
 replace id = 4093 if name == "Wiler b. Utzenstorf"
 replace id = 4095 if name == "Wiler Lötschen"
 
-save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/adjust_id/output/merge_towns_adjid_bfsplz_commuting1950clean.dta", replace
-
+save "adjust_id/output/merge_towns_adjid_bfsplz_commuting1950clean.dta", replace

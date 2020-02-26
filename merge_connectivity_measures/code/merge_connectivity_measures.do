@@ -1,6 +1,3 @@
-* Paolo Campli, USI
-*--------------------------------------------------
-
 *--------------------------------------------------
 * Program Setup
 *--------------------------------------------------
@@ -13,5 +10,14 @@ capture log close       // Close existing log files
 * --------------------------------------------------
 
 
+use "merge_connectivity_measures/input/times_to_reg.dta"
 
-use new_tax_data/input/new_tax_data.dta
+merge 1:1 gdenr jahr using "merge_connectivity_measures/input/rcmacut_to_reg.dta"
+keep if _merge == 3
+drop _merge 
+
+merge 1:1 gdenr jahr using "merge_connectivity_measures/input/top5times_to_reg.dta"
+keep if _merge == 3
+drop _merge 
+
+save "merge_connectivity_measures/output/merge_connectivity_measures.dta"

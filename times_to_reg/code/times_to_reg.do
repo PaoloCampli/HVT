@@ -13,8 +13,8 @@ capture log close       // Close existing log files
 * --------------------------------------------------
 
 
-cd /Users/paolocampli/hw
-use times_to_reg/input/make_panel_times.dta, clear
+*cd /Users/paolocampli/hw
+use "times_to_reg/input/make_panel_times.dta", clear
 
 
 drop if jahr < 1947
@@ -26,9 +26,9 @@ xtset gdenr periode
 
 
 
-merge 1:1 gdenr jahr using times_to_reg/input/clean_tax_bases.dta, keep(1 3) nogen
+merge 1:1 gdenr jahr using "times_to_reg/input/clean_tax_bases.dta", keep(1 3) nogen
 
-merge 1:1 gdenr jahr using times_to_reg/input/new_tax_data.dta, keep(1 3) nogen
+merge 1:1 gdenr jahr using "times_to_reg/input/new_tax_data.dta", keep(1 3) nogen
 
 
 
@@ -189,7 +189,7 @@ order 	gdenr jahr time_to_40 time_to_80 gdename bezname kanton zugang_p_10  ///
 
 
 
-save times_to_reg/output/times_to_reg.dta, replace
+save "times_to_reg/output/times_to_reg.dta", replace
 
 
 

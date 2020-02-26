@@ -23,7 +23,8 @@ macro drop _all         // clear all macros
 capture log close       // Close existing log files
 * --------------------------------------------------
 
-use "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/Data/merge_townsbfsplz_commuting1950clean.dta", clear
+*cd /Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT
+use "Data/merge_townsbfsplz_commuting1950clean.dta", clear
 
 
 sort name
@@ -69,4 +70,4 @@ sort name
 gen id = _n
 
 
-save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/adjust_loc_names/output/merge_towns_adj_bfsplz_commuting1950clean.dta", replace
+save "0.tasks/adjust_loc_names/output/merge_towns_adj_bfsplz_commuting1950clean.dta", replace

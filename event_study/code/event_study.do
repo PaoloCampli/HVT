@@ -17,7 +17,7 @@ capture log close       // Close existing log files
 * =========================================
 
 
-cd /Users/paolocampli/hw
+*cd /Users/paolocampli/hw
 use times_to_reg/output/times_to_reg.dta, clear
 xtset
 
@@ -99,11 +99,11 @@ local drop			"b_pre10 b_post10"
 local std_sample	"zentren == 0 & agglomeration == 0 & in_zugang_p_30 ==1"
 					 /* & balanced_sample > 0*/
 local graph_opt		"vertical xline(5) yline(0) plotregion(fcolor(white)) ciopts(recast(rcap)) graphregion(fcolor(white))"
-local rownames		"-8 -6 -4 -2 +0 +2 +4 +6 +8"	
-	
-	
-	
-***		
+local rownames		"-8 -6 -4 -2 +0 +2 +4 +6 +8"
+
+
+
+***
 * ------- times
 reghdfe ln_time_to_40  `window' if `std_sample', a(gdenr jahr) cl(gdenr)
 
@@ -171,9 +171,9 @@ matrix rownames L1 =  `rownames'
 
 coefplot (matrix(L1[,1]), ci((L1[,2] L1[,3]))), drop(`drop') `graph_opt' `labels'
 graph export event_study/output/ev_sty_ln_stpf_norm_p90_`pre'_cut.pdf, replace
-	
-	
-	
+
+
+
 ***
 * ------- tax
 
@@ -204,7 +204,7 @@ matrix L1 = (L1 \ matnointb_post8)
 
 matrix rownames L1 =  `rownames'
 
-coefplot (matrix(L1[,1]), ci((L1[,2] L1[,3]))), drop(`drop') `graph_opt' `labels'	 
+coefplot (matrix(L1[,1]), ci((L1[,2] L1[,3]))), drop(`drop') `graph_opt' `labels'
 graph export event_study/output/graph_log_tax90_`pre'_cut.pdf, replace
 
 
@@ -397,24 +397,24 @@ coefplot, keep(b_pre20 b_pre18 b_pre16 b_pre14 b_pre12 b_pre10 b_pre8 ///
 	vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -543,19 +543,19 @@ bysort gdenr: replace b_post10 = 1 if jahr >= first_access + 10
 set more off
 reghdfe 	ln_rcma  b_pre10-b_pre4 b_0 b_post*  ///
 			if in_zugang_p_10 == 1, a(gdenr jahr) cluster(gdenr)
-	
+
 coefplot, 	keep(b_pre10 b_pre8 b_pre6 b_pre4 b_0 b_post*) ///
 			vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
 
 graph export event_study/output/graph_lnrcma_10_treated.pdf, replace
 
-	
-	
+
+
 reghdfe 	ln_rcma  b_pre10-b_pre4 b_0 b_post*, a(gdenr jahr) cluster(gdenr)
 
 coefplot, 	keep(b_pre10 b_pre8 b_pre6 b_pre4 b_0 b_post*) ///
 			vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
-			
+
 graph export event_study/output/graph_lnrcma_10_all.pdf, replace
 
 * -----------
@@ -565,19 +565,19 @@ graph export event_study/output/graph_lnrcma_10_all.pdf, replace
 set more off
 reghdfe 	rcma  b_pre10-b_pre4 b_0 b_post*  ///
 			if in_zugang_p_10 == 1, a(gdenr jahr) cluster(gdenr)
-	
+
 coefplot, 	keep(b_pre10 b_pre8 b_pre6 b_pre4 b_0 b_post*) ///
 			vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
 
 graph export event_study/output/graph_rcma_10_treated.pdf, replace
 
-	
-	
+
+
 reghdfe 	rcma  b_pre10-b_pre4 b_0 b_post*, a(gdenr jahr) cluster(gdenr)
 
 coefplot, 	keep(b_pre10 b_pre8 b_pre6 b_pre4 b_0 b_post*) ///
 			vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
-			
+
 graph export event_study/output/graph_rcma_10_all.pdf, replace
 
 
@@ -720,16 +720,16 @@ reghdfe ln_rcma  b_pre20-b_pre4 b_0 b_post* ///
 coefplot, keep(b_pre20 b_pre18 b_pre16 b_pre14 b_pre12 b_pre10 b_pre8 ///
 				b_pre6 b_pre4 b_0 b_post*) ///
 	vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
-	
 
-	
+
+
 * ==============================
 
 set more off, permanently
 set emptycells drop
 set matsize 11000
 * rcma
-reghdfe ln_rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)	
+reghdfe ln_rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)
 predict resid, residuals
 
 scatter resid jahr
@@ -740,9 +740,9 @@ reghdfe resid  b_pre20-b_pre4 b_0 b_post* ///
 coefplot, keep(b_pre20 b_pre18 b_pre16 b_pre14 b_pre12 b_pre10 b_pre8 ///
 				b_pre6 b_pre4 b_0 b_post*) ///
 	vertical yline(0) plotregion(fcolor(white)) graphregion(fcolor(white))
-	
 
-	
+
+
 foreach var of varlist b_* {
 	gen resid_`var' = resid*`var'
 }
@@ -788,7 +788,7 @@ graph export event_study/output/box_log_resid.pdf, replace
 
 collapse (sum) resid_*, by(first_access)
 drop if first_access == .
-graph box resid_b_pre20 resid_b_post10, over(first_access)  
+graph box resid_b_pre20 resid_b_post10, over(first_access)
 graph export event_study/output/box_collapse_resid.pdf, replace
 
 
@@ -798,7 +798,7 @@ graph export event_study/output/box_collapse_resid.pdf, replace
 * ========
 * scatter resid on age of highway, by early vs late opener (and maybe collapse by group)
 * also group by canton
-* campare with non-log and also for driving times 
+* campare with non-log and also for driving times
 
 
 
@@ -817,7 +817,7 @@ drop access_year
 bysort gdenr: gen age_of_hw = jahr - first_access
 
 * Log_rcma
-reghdfe ln_rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)	
+reghdfe ln_rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)
 predict resid, residuals
 
 /*
@@ -863,7 +863,7 @@ drop resid1-resid7 mean_resid*
 /*
 preserve
 separate resid, by(kanton) veryshortlabel
-collapse resid*, by(kanton age_of_hw) 
+collapse resid*, by(kanton age_of_hw)
 * scatter of the highest variance cantons:
 twoway scatter resid10 resid14 resid15 resid21 resid22 resid24 age_of_hw, scale(0.4) mlabel(kanton kanton kanton kanton kanton kanton) legend(off) ms(none) mlabpos(0) mlabsize(*1.2) dcolor(bg)
 graph export event_study/output/scatter_resid_collapsed_k_age.pdf, replace
@@ -876,7 +876,7 @@ restore
 * No Logs
 drop resid gd yr
 
-reghdfe rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)	
+reghdfe rcma, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)
 predict resid, residuals
 
 separate resid, by(access_decade) veryshortlabel
@@ -917,7 +917,7 @@ bysort gdenr: gen age_of_hw = jahr - first_access
 
 
 * Log_tt40
-reghdfe ln_time_to_40, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)	
+reghdfe ln_time_to_40, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)
 predict resid, residuals
 
 
@@ -952,7 +952,7 @@ drop resid resid1-resid7 mean_resid*
 * time_to_40
 drop gd yr
 
-reghdfe time_to_40, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)	
+reghdfe time_to_40, a(gd=i.gdenr yr=i.jahr) cluster(gdenr)
 predict resid, residuals
 
 
@@ -1056,9 +1056,3 @@ margins dummie, dydx(time_to_40)
 
 
 */
-
-
-
-
-
-

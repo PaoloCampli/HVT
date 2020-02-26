@@ -16,7 +16,7 @@ capture log close       // Close existing log files
 * --------------------------------------------------
 
 
-cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
+*cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
 
 use "adjust_id/output/merge_towns_adjid_bfsplz_commuting1950clean.dta"
 
@@ -36,4 +36,4 @@ order id idO
 
 compress
 
-save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", replace
+save "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", replace

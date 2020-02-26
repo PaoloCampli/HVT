@@ -11,9 +11,9 @@ capture log close       // Close existing log files
 
 
 * Fake backwards
-cd /Users/paolocampli/hw
-use make_panel_rcmacut/input/link/mkt_access_byorigin1955_cut.dta, clear
- 
+*cd /Users/paolocampli/hw
+use "make_panel_rcmacut/input/link/mkt_access_byorigin1955_cut.dta", clear
+
 forvalues year = 1935(2)1953{
 	replace year = `year'
 	tempfile mkt_access_byorigin`year'_cut
@@ -24,18 +24,18 @@ forvalues year = 1935(2)1953{
 
 
 * Build panel
-use make_panel_rcmacut/input/link/mkt_access_byorigin1955_cut.dta, clear
+use "make_panel_rcmacut/input/link/mkt_access_byorigin1955_cut.dta", clear
 
- 
+
 forvalues year = 1935(2)1953 {
- 
+
 	append using `mkt_access_byorigin`year'_cut'
 }
 
- 
+
 forvalues year = 1957(2)2015 {
- 
-	append using make_panel_rcmacut/input/link/mkt_access_byorigin`year'_cut.dta
+
+	append using "make_panel_rcmacut/input/link/mkt_access_byorigin`year'_cut.dta"
 }
 
 
@@ -50,6 +50,4 @@ sort  	gdenr jahr
 *drop _merge
 
 
-save make_panel_rcmacut/output/make_panel_rcmacut.dta, replace
-
-
+save "make_panel_rcmacut/output/make_panel_rcmacut.dta", replace

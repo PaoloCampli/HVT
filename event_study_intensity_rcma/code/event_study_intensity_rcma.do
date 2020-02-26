@@ -17,7 +17,7 @@ capture log close       // Close existing log files
 
 **** Intensity using top events in terms of rcma reduction ****
 
-cd /Users/paolocampli/hw/event_study_intensity_rcma
+*cd /Users/paolocampli/hw/event_study_intensity_rcma
 use input/rcmacut_to_reg.dta, clear
 
 
@@ -115,7 +115,7 @@ local m_post_base	= - `post_base'
 local start = `pre' - 2
 local end	= `post' + 2
 
-local m_start = - `start' 
+local m_start = - `start'
 
 
 
@@ -262,21 +262,21 @@ foreach var of varlist `dep_vars' {
 	*** Matrix ***
 	local m_pre = -`pre'
 		matrix L1 = (Mb_m`m_pre')
-		
+
 	local x = `pre' + 2
 	forvalues y = `x'(2)`pre_base' {
 		local m_y = -`y'
 		matrix L1 = (L1 \ Mb_m`m_y')
 		}
-		
+
 		matrix L1 = (L1 \ 0,0,0) 	// baseline
-		
+
 	forvalues y = `post_base'(2)`post' {
 		if `y' < 0 {
 			local m_y = -`y'
 			matrix L1 = (L1 \ Mb_m`m_y')
 			}
-		
+
 		else {
 			matrix L1 = (L1 \ Mb_`y')
 			}
@@ -289,6 +289,3 @@ foreach var of varlist `dep_vars' {
 	graph export output/`var'_pre`m_pre'_to`post'_`event'.pdf, replace
 
 }
-
-
-

@@ -17,7 +17,7 @@ capture log close       // Close existing log files
 
 **** Intensity using top events in terms of tt40 reduction ****
 
-cd /Users/paolocampli/hw
+*cd /Users/paolocampli/hw
 use times_to_reg/output/times_to_reg.dta, clear
 
 

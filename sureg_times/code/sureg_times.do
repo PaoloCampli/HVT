@@ -18,8 +18,8 @@ cap clear mata
 set matsize 11000
 set maxvar 20000
 
-cd /Users/paolocampli/hw
-use times_to_reg/output/times_to_reg.dta, clear
+*cd /Users/paolocampli/hw
+use "times_to_reg/output/times_to_reg.dta", clear
 
 
 
@@ -275,10 +275,7 @@ foreach i in mean_stpf_p90 mean_stpf_u_p90 {
 
 
 
-cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/doFiles/"
-
-
-
+cd "../doFiles/"
 
 run "Paolo_HWT_Mata2.do"
 

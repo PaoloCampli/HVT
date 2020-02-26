@@ -17,15 +17,15 @@ capture log close       // Close existing log files
 * =========================================
 
 
-cd /Users/paolocampli/hw
-use times_to_reg/output/times_to_reg.dta, clear
+*cd /Users/paolocampli/hw
+use "times_to_reg/output/times_to_reg.dta", clear
 xtset
 
 keep 	gdename gdenr kannr jahr periode time_to_40 time_to_80 zugang_p_10 zentren ///
 		agglomeration in_zugang_p_10 in_zugang_p_30 ln_time_to_40 ///
-		ln_stpf_norm_p90 log_tax90 
+		ln_stpf_norm_p90 log_tax90
 
-		
+
 foreach var of varlist time_to_40-time_to_80 {
 	bysort gdenr: gen `var'_reduction = - D.`var'
 }
@@ -75,13 +75,4 @@ gen balanced = sum_top01_norm_tt40_red
 
 
 
-save tt40_sumstat/output/tt40_sumstats.dta, replace
-
-
-
-
-
-
-
-
-
+save "tt40_sumstat/output/tt40_sumstats.dta", replace

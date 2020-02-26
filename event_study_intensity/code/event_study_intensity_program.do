@@ -1,124 +1,52 @@
 * Paolo Campli, USI
 *--------------------------------------------------
 
-*--------------------------------------------------
-* Program Setup
-*--------------------------------------------------
-version 14              // Set Version number for backward compatibility
-set more off            // Disable partitioned output
-clear all               // Start with a clean slate
-set linesize 80         // Line size limit to make output more readable
-macro drop _all         // clear all macros
-capture log close       // Close existing log files
-* --------------------------------------------------
+version 14
+clear all
+set more off
+macro drop _all
+capture log close
 
-
-
-
-**** Intensity using top events in terms of top5times reduction ****
-
-*cd /Users/paolocampli/hw/event_study_intensity_top5
-use input/top5times_to_reg.dta, clear
+* program should take as argument an event (a stata variable) and two numbers, pre and post
+args event pre post sample dep_vars
 
 
 qui: sum jahr
 local init_year = r(min)
 local fin_year = r(max)
-xtset gdenr periode
-
-
-* drop very few municip which only appear later
-bys gdenr: egen start = min(jahr)
-drop if start > 1950
-drop start
-
-
-* Old event definition based on hw access to check that it reduces to old design
-gen event_zugang_p_10 = D.zugang_p_10
-
-*** Event definitions ***
-foreach v of varlist top05_log_w_tttop5_red top10_log_w_tttop5_red  {
-	gen event_`v' = `v'
-}
-
-
-
-*** imputing missing
-foreach v of varlist top05_log_w_tttop5_red top10_log_w_tttop5_red  zugang_p_10 {
-	replace event_`v' = . if jahr > 2015					// no hw data post 2015
-	replace event_`v' = 0 if jahr < 1955 & event_`v' == .	// no hw  at all pre 1955
-}
-
-
-
-*** Weighted events
-foreach v of varlist event_top05_log_w_tttop5_red event_top10_log_w_tttop5_red  {
-	gen w_`v' = `v'*log_w_tttop5_red
-}
-
-
-
-*** Weighted event zugang_p_10
-gen access_year = .
-bysort gdenr: replace access_year = jahr if zugang_p_10 == 1
-bysort gdenr: egen first_access = min(access_year)
-bys gdenr: gen time_window = inrange(jahr, first_access - 2, first_access + 10)
-bys gdenr: egen w_event_zugang_p_10 = total(log_w_tttop5_red*time_window)
-bys gdenr: replace w_event_zugang_p_10 = w_event_zugang_p_10*event_zugang_p_10
-
-drop access_year first_access time_window
-
-
-
-
-******* EVENT *******
-local event "event_top05_log_w_tttop5_red"
-*local event "event_zugang_p_10"
-
 
 
 *** Treatment dates, totals etc
 gen treat_year = .
-bys gdenr: replace treat_year 	= jahr if `event' > 0 & `event' < .
+bys gdenr: replace treat_year = jahr if `event' > 0 & `event' < .
 bys gdenr: egen first_treat 	= min(treat_year)
 bys gdenr: egen last_treat 		= max(treat_year)
 bys gdenr: egen tot_treat 		= total(treat_year/treat_year)
-		   egen cumul_treat		= total(treat_year/treat_year)
-bys jahr:  egen events_per_year = total(treat_year/treat_year)
-bys gdenr (jahr): gen events_bef_year 	= sum(events_per_year)
-gen event_fraction 				= events_bef_year/cumul_treat
+		       egen cumul_treat	  = total(treat_year/treat_year)
+
+bys jahr: egen events_per_year        = total(treat_year/treat_year)
+bys gdenr (jahr): gen events_bef_year = sum(events_per_year)
+
+gen event_fraction 	= events_bef_year/cumul_treat
 
 
 local sample "zentren == 0 & agglomeration == 0 & in_zugang_p_30 ==1"
 
-*** Events graphs
-twoway hist treat_year if `sample', bcolor(sandb) density yaxis(2) yscale(range(0) axis(1)) ///
-	|| line event_fraction jahr  if `sample', lcolor(black) sort yaxis(1) yscale(range(0) axis(1)) ///
-	, plotregion(fcolor(white)) graphregion(fcolor(white)) legend(off)
-graph export output/`event'.pdf, replace
-
-
-
-
 
 *** Time locals
-* non-binned
-local pre 	-8
-local post	 12
-* base year
-local base	 -2
+* non-binned pre and post are arguments
+* base year:
+local base	- 4
+* these are defined for later convenience
 local pre_base  = `base' - 2
 local post_base = `base' + 2
 local m_pre_base	= - `pre_base'		// stupid stata doesn't accept "-" in varname
 local m_post_base	= - `post_base'
-* binned:
+* all periods before pre and after post are binned:
 local start = `pre' - 2
-local end	= `post' + 2
+local end	  = `post' + 2
 
 local m_start = - `start'
-
-
-
 
 
 
@@ -191,9 +119,6 @@ foreach var of varlist b_* {
 }
 
 
-* years when we have tax data
-keep if jahr >= 1947 & jahr <= 2009
-
 
 * Balancedness: we only show coefficients identified by all municipalities
 * if a municip has all zeros for some dummie, the max is 0
@@ -204,8 +129,6 @@ gen balanced_sample = 1
 foreach var of varlist max_b_m`m_start'-max_b_`end' {
 	replace balanced_sample = balanced_sample*`var'
 }
-
-
 
 
 * -----------------------------------------
@@ -222,10 +145,6 @@ else {
 }
 
 
-local std_sample1	"zentren == 0 & agglomeration == 0 & in_zugang_p_30 == 1"
-local std_sample2	"& balanced_sample > 0 & flag_times_issue == 0"
-local std_sample3	"& (balanced_sample > 0 | last_treat == .)"
-local std_sample	"`std_sample1' `std_sample2'"
 
 local xline_pos 	= -`pre'/2 +1
 local graph_opt1	"vertical xline(`xline_pos') yline(0) plotregion(fcolor(white))"
@@ -240,12 +159,9 @@ forvalues y = `pre'(2)`post' {
 
 
 
-local dep_vars		"log_w_tttop5	ln_stpf_norm_p90	log_tax90"
-
-
 *** Output ***
 foreach var of varlist `dep_vars' {
-	reghdfe `var'  `window' if `std_sample', a(gdenr jahr) cl(gdenr)
+	reghdfe `var'  `window' if `sample', a(gdenr jahr) cl(gdenr)
 
 	foreach v of varlist `window' {
 		lincom _b[`v']

@@ -18,21 +18,21 @@ use "/Volumes/Samsung Portable SSD T5 Paolo/hw_years_small/hw1955.dta"
 
 * ---------------------------------------------------------
 
-cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
+*cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
 
 * Merge
-merge m:1 id using update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta, keepusing(gdenr)
+merge m:1 id using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
-drop _merge 
+drop _merge
 
 rename gdenr gdenr_d
 
 
-merge m:1 idO using update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta, keepusing(gdenr)
+merge m:1 idO using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
-drop _merge 
+drop _merge
 
 rename gdenr gdenr_o
 
@@ -80,7 +80,7 @@ use "/Volumes/Samsung Portable SSD T5 Paolo/hw_years_small/hw2010.dta", clear
 merge m:1 id using "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
-drop _merge 
+drop _merge
 
 rename gdenr gdenr_d
 
@@ -88,7 +88,7 @@ rename gdenr gdenr_d
 merge m:1 idO using "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
-drop _merge 
+drop _merge
 
 rename gdenr gdenr_o
 
@@ -110,14 +110,3 @@ save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.task
 
 drop if distance > 20
 save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/distance_cutoff/output/dist_cutoff_2010_20.dta", replace
-
-
-
-
-
-
-
-
-
-
-
