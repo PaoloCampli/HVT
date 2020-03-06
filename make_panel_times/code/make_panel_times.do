@@ -16,90 +16,32 @@ capture log close       // Close existing log files
 *cd /Users/paolocampli/hw
 
 
-use "gen_fake_times/output/times_byorigin1935.dta", clear
+use "make_panel_times/input/link/times_byorigin1955.dta", clear
 
-
-forvalues year = 1936(1)1954 {
-
-	append using "gen_fake_times/output/times_byorigin`year'.dta"
-
+forvalues year = 1935(2)1953{
+	replace year = `year'
+	tempfile times_byorigin`year'
+	save `times_byorigin`year''
 }
 
 
-forvalues year = 1955(1)2015 {
+* Build panel
+use "make_panel_times/input/link/times_byorigin1955.dta", clear
 
-	append using "dta_to_times_fixed_sample/output/times_byorigin`year'.dta"
 
+forvalues year = 1935(2)1953 {
+	append using `times_byorigin`year''
 }
 
 
-forvalues year = 2016(1)2020 {
-
-	append using "gen_fake_times/output/times_byorigin`year'.dta"
-
+forvalues year = 1957(2)2015 {
+	append using "make_panel_times/input/link/times_byorigin`year'.dta"
 }
+
 
 rename (gdenr_o year) (gdenr jahr)
-
-*merge 1:1 gdenr jahr using "clean_tax_bases/output/clean_tax_bases.dta"
-
-*keep if _merge == 3
-
-order gdenr jahr
-
-sort gdenr jahr
-
-*drop _merge
+order 	gdenr jahr
+sort  	gdenr jahr
 
 
 save "make_panel_times/output/make_panel_times.dta", replace
-
-
-
-/*
-
-* =====================================================
-asdf
-
-
-
-cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/"
-
-
-use "gen_fake_times/output/times_byorigin1935.dta", clear
-
-
-forvalues year = 1936(1)1954 {
-
-	append using "gen_fake_times/output/times_byorigin`year'.dta"
-
-}
-
-
-forvalues year = 1955(1)2010 {
-
-	append using "dta_to_times_fixed_sample/output/times_byorigin`year'_2010.dta"
-
-}
-
-
-forvalues year = 2011(1)2020 {
-
-	append using "gen_fake_times/output/times_byorigin`year'.dta"
-
-}
-
-rename (gdenr_o year) (gdenr jahr)
-
-merge 1:1 gdenr jahr using "make_panel_rcma/input/clean_tax_bases.dta"
-
-*keep if _merge == 3
-
-order gdenr jahr
-
-sort gdenr jahr
-
-drop _merge
-
-
-save "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/make_panel_times/output/make_panel_times_2010.dta", replace

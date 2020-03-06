@@ -19,7 +19,7 @@ set matsize 11000
 set maxvar 20000
 
 *cd /Users/paolocampli/hw
-use "times_to_reg/output/times_to_reg.dta", clear
+use "../input/merge_connectivity_measures.dta", clear
 
 
 
@@ -274,10 +274,7 @@ foreach i in mean_stpf_p90 mean_stpf_u_p90 {
 */
 
 
-
-cd "../doFiles/"
-
-run "Paolo_HWT_Mata2.do"
+run "../../structural_estimation/code/structural_estimation.do"
 
 
 *** Estimation

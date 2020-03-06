@@ -21,20 +21,16 @@ forvalues year = 1935(2)1953{
 }
 
 
-
-
 * Build panel
 use "make_panel_top5/input/link/times_top5_1955.dta", clear
 
 
 forvalues year = 1935(2)1953 {
-
 	append using `times_top5_`year''
 }
 
 
 forvalues year = 1957(2)2015 {
-
 	append using "make_panel_top5/input/link/times_top5_`year'.dta"
 }
 

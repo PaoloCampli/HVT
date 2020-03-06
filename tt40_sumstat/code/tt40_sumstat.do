@@ -18,7 +18,7 @@ capture log close       // Close existing log files
 
 
 *cd /Users/paolocampli/hw
-use "times_to_reg/output/times_to_reg.dta", clear
+use "../input/merge_connectivity_measures.dta", clear
 xtset
 
 keep 	gdename gdenr kannr jahr periode time_to_40 time_to_80 zugang_p_10 zentren ///
@@ -75,4 +75,4 @@ gen balanced = sum_top01_norm_tt40_red
 
 
 
-save "tt40_sumstat/output/tt40_sumstats.dta", replace
+save "../output/tt40_sumstats.dta", replace

@@ -14,7 +14,7 @@ capture log close       // Close existing log files
 
 
 *cd /Users/paolocampli/hw
-use "top5times_to_reg/input/make_panel_top5.dta", clear
+use "../input/make_panel_top5.dta", clear
 
 
 drop if jahr < 1947
@@ -26,9 +26,9 @@ sort gdenr periode
 
 
 
-merge m:1 gdenr jahr using "top5times_to_reg/input/clean_tax_bases.dta", keep(1 3) nogen
+merge m:1 gdenr jahr using "../input/clean_tax_bases.dta", keep(1 3) nogen
 
-merge 1:1 gdenr jahr using "top5times_to_reg/input/new_tax_data.dta", keep(1 3) nogen
+merge 1:1 gdenr jahr using "../input/new_tax_data.dta", keep(1 3) nogen
 
 
 
@@ -186,4 +186,4 @@ order 	gdenr jahr w_tttop5 gdename bezname kanton zugang_p_10  ///
 
 
 
-save "top5times_to_reg/output/top5times_to_reg.dta", replace
+save "../output/top5times_to_reg.dta", replace

@@ -15,7 +15,7 @@ capture log close       // Close existing log files
 
 
 *cd /Users/paolocampli/hw
-use "rcmacut_to_reg/input/make_panel_rcmacut.dta", clear
+use "../input/make_panel_rcmacut.dta", clear
 
 
 drop if jahr < 1947
@@ -26,9 +26,9 @@ xtset gdenr periode
 
 
 
-merge 1:1 gdenr jahr using "rcmacut_to_reg/input/clean_tax_bases.dta", keep(1 3) nogen
+merge 1:1 gdenr jahr using "../input/clean_tax_bases.dta", keep(1 3) nogen
 
-merge 1:1 gdenr jahr using "rcmacut_to_reg/input/new_tax_data.dta", keep(1 3) nogen
+merge 1:1 gdenr jahr using "../input/new_tax_data.dta", keep(1 3) nogen
 
 xtset gdenr periode
 
@@ -130,4 +130,4 @@ rename (log_tr_v0k_p50-log_tr_v0k_p99) (log_tax50 log_tax75 log_tax90 log_tax95 
 xtset gdenr periode
 sort gdenr jahr
 
-save "rcmacut_to_reg/output/rcmacut_to_reg.dta", replace
+save "../output/rcmacut_to_reg.dta", replace

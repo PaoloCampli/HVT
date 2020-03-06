@@ -21,7 +21,7 @@ set maxvar 20000
 *use "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/indep_reg_1/input/rcma_to_reg.dta", replace
 
 *cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks/"
-use "indep_reg_rcma/input/merge_connectivity_measures.dta", clear
+use "../input/merge_connectivity_measures.dta", clear
 
 
 local log_rcma		"ln_rcma 	d_ln_1_rcma-d_ln_10_rcma"
@@ -45,7 +45,7 @@ foreach var in `log_pop_vars' {
 		reghdfe log_tax90 	`log_rcma'		if `no_agglo' & in_zugang_p_30 ==1, a(gdenr##c.jahr i.jahr##i.kannr) cluster(gdenr)
 		estimates store reg_tax
 
-	esttab reg_* using "indep_reg_1/output/ind_reg_try.tex", keep(ln_rcma) ///
+	esttab reg_* using "../output/ind_reg_try.tex", keep(ln_rcma) ///
 		nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 
@@ -65,7 +65,7 @@ foreach dist in `dist_bands' {
 		reghdfe `var' 	`log_rcma'		if `no_agglo' & `dist'==1, a(gdenr##c.jahr `fe_pop' `fe_tax') cluster(gdenr)
 	estimates store reg_`var'
 	}
-	esttab reg_* using "indep_reg_1/output/ind_reg_`dist'.tex", keep(ln_rcma) ///
+	esttab reg_* using "../output/ind_reg_`dist'.tex", keep(ln_rcma) ///
 		nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 }
@@ -87,7 +87,7 @@ foreach dist in `dist_bands' {
 		reghdfe `var' 	`rcma'	if `no_agglo' & `dist'==1, a(gdenr##c.jahr `fe_pop' `fe_tax') cluster(gdenr)
 	estimates store reg_`var'
 	}
-	esttab reg_* using "indep_reg_1/output/ind_reg_nolog`dist'.tex", keep(rcma) ///
+	esttab reg_* using "../output/ind_reg_nolog`dist'.tex", keep(rcma) ///
 		nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 }
@@ -108,7 +108,7 @@ foreach dist in `dist_bands' {
 		reghdfe `var' 	`log_rcma'		if zentren == 0 & `dist'==1, a(gdenr##c.jahr `fe_pop' `fe_tax') cluster(gdenr)
 	estimates store reg_`var'
 	}
-	esttab reg_* using "indep_reg_1/output/ind_reg_agglo_`dist'.tex", keep(ln_rcma) ///
+	esttab reg_* using "../output/ind_reg_agglo_`dist'.tex", keep(ln_rcma) ///
 		nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 }
@@ -129,7 +129,7 @@ foreach dist in `dist_bands' {
 		reghdfe `var' 	`rcma'	if zentren == 0 & `dist'==1, a(gdenr##c.jahr `fe_pop' `fe_tax') cluster(gdenr)
 	estimates store reg_`var'
 	}
-	esttab reg_* using "indep_reg_1/output/ind_reg_agglo_nolog`dist'.tex", keep(rcma) ///
+	esttab reg_* using "../output/ind_reg_agglo_nolog`dist'.tex", keep(rcma) ///
 		nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 }
@@ -158,7 +158,7 @@ eststo: reghdfe ln_stpf_norm_p75_p90    ln_rcma d_ln_1_rcma-d_ln_10_rcma 	if zen
 eststo: reghdfe ln_stpf_norm_p90 		ln_rcma d_ln_1_rcma-d_ln_10_rcma 	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 ==1, a(i.gdenr i.jahr )
 eststo: reghdfe ln_einkst_v0k_p90 		ln_rcma d_ln_1_rcma-d_ln_10_rcma 	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 ==1, a(i.gdenr  i.jahr##i.kannr )
 }
-esttab using "indep_reg_1/output/indep_reg_4class_zug10_1.tex", replace label keep (ln_rcma) nonum mti("0-50" "50-75" "75-90" "90+" "Tax")
+esttab using "../output/indep_reg_4class_zug10_1.tex", replace label keep (ln_rcma) nonum mti("0-50" "50-75" "75-90" "90+" "Tax")
 
 
 
@@ -170,7 +170,7 @@ eststo: reghdfe ln_stpf_norm_p75_p90    rcma d1_rcma-d10_rcma 	if zentren == 0 &
 eststo: reghdfe ln_stpf_norm_p90 		rcma d1_rcma-d10_rcma 	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 ==0, a(i.gdenr i.jahr )
 eststo: reghdfe ln_einkst_v0k_p90 		rcma d1_rcma-d10_rcma 	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 ==0, a(i.gdenr  i.jahr##i.kannr )
 }
-esttab using "indep_reg_1/output/indep_reg_4class_zug10_0_nolog.tex", replace label keep (rcma) nonum mti("0-50" "50-75" "75-90" "90+" "Tax")
+esttab using "../output/indep_reg_4class_zug10_0_nolog.tex", replace label keep (rcma) nonum mti("0-50" "50-75" "75-90" "90+" "Tax")
 
 
 
@@ -189,7 +189,7 @@ eststo: reg ln_stpf_norm_under_p90  ln_rcma d_ln_1_rcma-d_ln_10_rcma 	i.gdenr##c
 eststo: reg ln_stpf_norm_p90 		ln_rcma d_ln_1_rcma-d_ln_10_rcma 	i.gdenr##c.periode i.jahr 				if zentren == 0 & agglomeration == 0 & in_zugang_p_10 == 1
 eststo: reg ln_einkst_v0k_p90 		ln_rcma d_ln_1_rcma-d_ln_10_rcma 	i.gdenr##c.periode i.jahr##i.kannr  	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 == 1
 }
-esttab using "indep_reg_1/output/indep_reg_b90_t10.tex", replace label keep (ln_rcma) nonum mti("Bot90" "Top10" "Tax" "Bot90" "Top10" "Tax")
+esttab using "../output/indep_reg_b90_t10.tex", replace label keep (ln_rcma) nonum mti("Bot90" "Top10" "Tax" "Bot90" "Top10" "Tax")
 
 
 reghdfe ln_stpf_norm_p90 		c.ln_rcm##i.zugang_p_10 		if zentren == 0 & agglomeration == 0 & in_zugang_p_10 == 1, a(i.gdenr##c.periode i.jahr)
@@ -252,7 +252,7 @@ qui{
 eststo: reg `var'	ln_rcma ln_s1_rcma-ln_s10_rcma 	i.gdenr##c.periode i.jahr##i.kannr  	if zentren == 0 & agglomeration == 0 & in_zugang_p_10 == 1, cluster(gdenr)
 }
 }
-estout using "indep_reg_1/output/indep_reg_b90_t10.tex", replace label{"Independent regressions b90-t10 cluster"} keep (ln_rcma) nonum mti("Bot90" "Top10" "Tax")
+estout using "../output/indep_reg_b90_t10.tex", replace label{"Independent regressions b90-t10 cluster"} keep (ln_rcma) nonum mti("Bot90" "Top10" "Tax")
 
 
 

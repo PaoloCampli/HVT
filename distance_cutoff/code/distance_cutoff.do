@@ -18,10 +18,9 @@ use "/Volumes/Samsung Portable SSD T5 Paolo/hw_years_small/hw1955.dta"
 
 * ---------------------------------------------------------
 
-*cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
 
 * Merge
-merge m:1 id using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
+merge m:1 id using "../input/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
 drop _merge
@@ -29,7 +28,7 @@ drop _merge
 rename gdenr gdenr_d
 
 
-merge m:1 idO using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
+merge m:1 idO using "../input/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 keep if _merge == 3
 drop _merge
@@ -45,19 +44,20 @@ rename (distance time) (distance1955 time1955)
 
 
 drop if distance > 80
-save "distance_cutoff/output/dist_cutoff_1955_80.dta", replace
+save "../output/dist_cutoff_1955_80.dta", replace
 
 drop if distance > 60
-save "distance_cutoff/output/dist_cutoff_1955_60.dta", replace
+save "../output/dist_cutoff_1955_60.dta", replace
 
 drop if distance > 40
-save "distance_cutoff/output/dist_cutoff_1955_40.dta", replace
+save "../output/dist_cutoff_1955_40.dta", replace
 
 drop if distance > 20
-save "distance_cutoff/output/dist_cutoff_1955_20.dta", replace
+save "../output/dist_cutoff_1955_20.dta", replace
 
 
 
+/*
 * ========================================================
 asdf
 

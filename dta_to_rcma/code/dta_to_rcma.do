@@ -43,7 +43,7 @@ forvalues year = 2011(2)2015 {
 	*cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
 
 	* Merge
-	merge m:1 id using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
+	merge m:1 id using "dta_to_rcma/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 			, keepusing(gdenr resemp_1950 wkpemp_1950)
 
 	keep if _merge == 3
@@ -51,7 +51,7 @@ forvalues year = 2011(2)2015 {
 
 	rename gdenr gdenr_d
 
-	merge m:1 idO using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
+	merge m:1 idO using "dta_to_rcma/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 			, keepusing(gdenr)
 
 	keep if _merge == 3

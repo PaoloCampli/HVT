@@ -18,7 +18,7 @@ set matsize 11000
 set maxvar 20000
 
 *cd /Users/paolocampli/hw/
-use "indep_reg_times/input/merge_connectivity_measures.dta", clear
+use "../input/merge_connectivity_measures.dta", clear
 
 
 local ln_time40 	"ln_time_to_40 		d_ln_1_time_to_40-d_ln_20_time_to_40"
@@ -129,10 +129,19 @@ foreach var in `log_pop_vars' {
 merge 1:1 gdenr jahr using "/Users/paolocampli/Dropbox/Highways, Taxes and Voting/data_Paolo_nb_firms.dta"
 reghdfe nb_firms	`ln_time40'		if `std_sample', a(gdenr##c.jahr jahr) cluster(gdenr)
 	estimates store reg_firms
-	esttab reg_firms using "indep_reg_times/output/ind_reg_noagglo_firms.tex", keep(ln_time_to_40) ///
+	esttab reg_firms using "../output/ind_reg_noagglo_firms.tex", keep(ln_time_to_40) ///
 		nonumbers p mtitles("Number of firms") replace
 	cap estfe . reg_*, restore
 
+
+	reghdfe nb_firms	`ln_time40'	, a(gdenr##c.jahr jahr) cluster(gdenr)
+		estimates store reg_firms
+		esttab reg_firms using "../output/ind_reg_noagglo_firms_try.tex", keep(ln_time_to_40) ///
+			nonumbers p mtitles("Number of firms") replace
+		cap estfe . reg_*, restore
+
+
+/*
 
 
 local 10leads_lags "ln_l1_time_to_40-ln_l10_time_to_40	ln_f1_time_to_40-ln_f10_time_to_40"
@@ -147,7 +156,7 @@ foreach var in `log_pop_vars' {
 		reghdfe log_tax90 	ln_time_to_40  `20leads_lags'		if `std_sample', a(gdenr##c.jahr i.jahr##i.kannr) cluster(gdenr)
 		estimates store reg_tax
 
-	esttab reg_* using "indep_reg_times/output/ind_reg_noagglo_20leads_lags.tex", keep(ln_time_to_40) ///
+	esttab reg_* using "../output/ind_reg_noagglo_20leads_lags.tex", keep(ln_time_to_40) ///
 		nonumbers p mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 	cap estfe . reg_*, restore
 
@@ -274,7 +283,7 @@ estimates store reg_tax
 
 estfe . reg_*
 return list
-esttab reg_* using "indep_reg_times/output/ind_reg_1955_noagglo.tex", keep(ln_time_to_40) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
+esttab reg_* using "../output/ind_reg_1955_noagglo.tex", keep(ln_time_to_40) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 estfe . reg_*, restore
 
 
@@ -301,11 +310,14 @@ estimates store reg_tax
 
 estfe . reg_*
 return list
-esttab reg_* using "indep_reg_times/output/ind_reg_1955_80.tex", keep(ln_time_to_80) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
+esttab reg_* using "../output/ind_reg_1955_80.tex", keep(ln_time_to_80) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 estfe . reg_*, restore
 
 
 
+
+*** Momentary comment to try makefiles ***
+/*
 
 set more off
 local m = 1

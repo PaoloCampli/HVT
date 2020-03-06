@@ -18,7 +18,7 @@ use "/Volumes/Samsung Portable SSD T5 Paolo/hw_years_small/hw1955.dta", clear
 *cd /Users/paolocampli/hw
 
 
-merge m:1 id using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
+merge m:1 id using "dta_to_top5/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 		, keepusing(gdenr resemp_1950)
 
 keep if _merge == 3
@@ -26,7 +26,7 @@ drop _merge
 rename gdenr gdenr_d
 
 
-merge m:1 idO using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
+merge m:1 idO using "dta_to_top5/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 		, keepusing(gdenr)
 
 keep if _merge == 3
@@ -64,7 +64,7 @@ forvalues year = 1955(2)2015 {
 	*cd /Users/paolocampli/hw
 
 	* Merge
-	merge m:1 id using update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta ///
+	merge m:1 id using "dta_to_top5/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 			, keepusing(gdenr resemp_1950)
 
 	keep if _merge == 3
@@ -72,7 +72,7 @@ forvalues year = 1955(2)2015 {
 	rename gdenr gdenr_d
 
 
-	merge m:1 idO using update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta ///
+	merge m:1 idO using "dta_to_top5/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta" ///
 			, keepusing(gdenr)
 
 	keep if _merge == 3
@@ -83,7 +83,7 @@ forvalues year = 1955(2)2015 {
 	order gdenr_d, a(destination_name)
 	order gdenr_o, a(origin_name)
 
-	merge 1:m gdenr_o gdenr_d idO id using dta_to_top5/output/top5_1955_small, ///
+	merge 1:m gdenr_o gdenr_d idO id using "dta_to_top5/output/top5_1955_small.dta", ///
 			keepusing(gdenr_d id rcma_share)
 
 	keep if _merge == 3

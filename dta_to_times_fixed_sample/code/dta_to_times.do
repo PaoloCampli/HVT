@@ -20,14 +20,14 @@ forvalues year = 2011(1)2015 {
 	*cd "/Users/paolocampli/iCloud Drive (Archive)/Desktop/Work/Projects/HVT/0.tasks"
 
 	* Merge
-	merge m:1 id using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
+	merge m:1 id using "dta_to_times_fixed_sample/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 	keep if _merge == 3
 	drop _merge
 	rename gdenr gdenr_d
 
 
-	merge m:1 idO using "update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
+	merge m:1 idO using "dta_to_times_fixed_sample/input/merge_towns_adj_update_bfsplz_commuting1950clean.dta", keepusing(gdenr)
 
 	keep if _merge == 3
 	drop _merge
@@ -39,7 +39,7 @@ forvalues year = 2011(1)2015 {
 
 
 	merge 1:1 origin_name destination_name using ///
-			"distance_cutoff/output/dist_cutoff_1955_80.dta", keepusing(origin_name destination_name distance1955 time1955)
+			"dta_to_times_fixed_sample/input/link/dist_cutoff_1955_80.dta", keepusing(origin_name destination_name distance1955 time1955)
 
 	*drop if distance > 80
 	drop if _merge < 3
@@ -48,7 +48,7 @@ forvalues year = 2011(1)2015 {
 
 
 	merge 1:1 origin_name destination_name using ///
-			"distance_cutoff/output/dist_cutoff_1955_40.dta", keepusing(origin_name destination_name)
+			"dta_to_times_fixed_sample/input/link/dist_cutoff_1955_40.dta", keepusing(origin_name destination_name)
 
 	*drop if distance > 40
 	drop if _merge < 3

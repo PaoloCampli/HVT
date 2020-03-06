@@ -18,7 +18,7 @@ set matsize 11000
 set maxvar 20000
 
 *cd /Users/paolocampli/hw/
-use "indep_reg_top5/input/merge_connectivity_measures.dta", clear
+use "../input/merge_connectivity_measures.dta", clear
 
 
 local ln_w_tttop5 	"ln_w_tttop5 		d_ln_1_w_tttop5 - d_ln_10_w_tttop5"
@@ -260,7 +260,7 @@ estimates store reg_tax
 
 estfe . reg_*
 return list
-esttab reg_* using "indep_reg_top5/output/ind_reg_noagglo.tex", se keep(ln_w_tttop5) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
+esttab reg_* using "../output/ind_reg_noagglo.tex", se keep(ln_w_tttop5) nonumbers mtitles("B50" "50-75" "75-90" "T10" "Tax") replace
 estfe . reg_*, restore
 
 
