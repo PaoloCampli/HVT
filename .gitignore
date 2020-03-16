@@ -7,3 +7,4 @@
 *.log
 *.png
 *\/output\/*
+create_dirs_symlinks.txt

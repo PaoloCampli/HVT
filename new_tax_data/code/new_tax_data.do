@@ -14,4 +14,4 @@ capture log close       // Close existing log files
 
 
 
-use new_tax_data/input/new_tax_data.dta
+use ../input/new_tax_data.dta

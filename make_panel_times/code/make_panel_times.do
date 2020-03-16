@@ -16,7 +16,7 @@ capture log close       // Close existing log files
 *cd /Users/paolocampli/hw
 
 
-use "make_panel_times/input/link/times_byorigin1955.dta", clear
+use "../input/link/times_byorigin1955.dta", clear
 
 forvalues year = 1935(2)1953{
 	replace year = `year'
@@ -26,7 +26,7 @@ forvalues year = 1935(2)1953{
 
 
 * Build panel
-use "make_panel_times/input/link/times_byorigin1955.dta", clear
+use "../input/link/times_byorigin1955.dta", clear
 
 
 forvalues year = 1935(2)1953 {
@@ -35,7 +35,7 @@ forvalues year = 1935(2)1953 {
 
 
 forvalues year = 1957(2)2015 {
-	append using "make_panel_times/input/link/times_byorigin`year'.dta"
+	append using "../input/link/times_byorigin`year'.dta"
 }
 
 
@@ -44,4 +44,4 @@ order 	gdenr jahr
 sort  	gdenr jahr
 
 
-save "make_panel_times/output/make_panel_times.dta", replace
+save "../output/make_panel_times.dta", replace

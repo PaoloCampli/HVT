@@ -25,7 +25,7 @@ set maxvar 20000
 ********
 
 *cd /Users/paolocampli/hw
-use clean_tax_bases/input/data_Paolo.dta, clear
+use ../input/data_Paolo.dta, clear
 
 qui: sum jahr if stpf_norm != .
 global y_min = r(min)
@@ -289,4 +289,4 @@ g in_`var'_0 = d_`var'
 }
 
 
-save clean_tax_bases/output/clean_tax_bases.dta, replace
+save ../output/clean_tax_bases.dta, replace
