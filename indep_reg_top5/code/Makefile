@@ -10,5 +10,5 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 	@echo "" > create_dirs_symlinks.txt
 
 
-$(output): .do $(stata_dta)
+$(output): indep_reg_top5.do $(stata_dta)
 	-bash run.sh

@@ -2,7 +2,7 @@ dirs_symlinks = create_dirs_symlinks.txt
 
 stata_dta = ../input/rcmacut_to_reg.dta\
 						../input/times_to_reg.dta\
-						..input/top5times_to_reg.dta
+						../input/top5times_to_reg.dta
 output = ../output/merge_connectivity_measures.dta
 
 all: $(dirs_symlinks) $(output)
