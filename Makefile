@@ -15,6 +15,8 @@ task_14=indep_reg_rcma/code
 task_15=indep_reg_times/code
 task_16=sureg_times/code
 
+task_17=grapher/code
+
 
 
 full_version:
@@ -34,3 +36,4 @@ full_version:
 					$(MAKE) -C $(task_14)
 					$(MAKE) -C $(task_15)
 					$(MAKE) -C $(task_16)
+					$(MAKE) -C $(task_17)

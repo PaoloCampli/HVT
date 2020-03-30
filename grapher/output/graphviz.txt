@@ -28,5 +28,6 @@ dta_to_top5 -> make_panel_top5
 top5times_to_reg -> merge_connectivity_measures
 rcmacut_to_reg -> merge_connectivity_measures
 times_to_reg -> merge_connectivity_measures
+merge_connectivity_measures -> indep_reg_top5
 commuting_data -> update_gdenr
 }
