@@ -2,12 +2,11 @@
 *--------------------------------------------------
 
 version 14
-clear all
 set more off
-macro drop _all
 capture log close
 
-* program takes arguments: an event (a stata variable) and two numbers, pre and post
+* program takes arguments: an event (a stata variable) and two numbers, pre and post,
+* "pre" is intended as a negative integer (e.g. years before event), "post" is positive, 
 * plus locals for sample definition and dependent variables for regressions
 args event pre post sample dep_vars
 
