@@ -154,7 +154,7 @@ forvalues y = `pre'(2)`post' {
 	local rows = "`rows' `y'"
 }
 
-
+macro li
 
 *** Output ***
 foreach var of varlist `dep_vars' {
@@ -199,6 +199,6 @@ foreach var of varlist `dep_vars' {
 	matrix rownames L1 = `rows'
 
 	coefplot (matrix(L1[,1]), ci((L1[,2] L1[,3])) label("total")), `graph_opt' `labels'
-	graph export ../output/`var'_pre`m_pre'_to`post'_`event'.pdf, replace
+	graph export "../output/`var'_pre`m_pre'_to`post'_`event'.pdf", replace
 
 }
