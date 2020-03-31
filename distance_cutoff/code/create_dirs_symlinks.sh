@@ -3,4 +3,4 @@
 mkdir -p ../input/
 mkdir -p ../output/
 
-ln -s ../../update_gdenr/output/merge_towns_adj_update_bfsplz_commuting1950clean.dta ../input
+ln -sfn ../../merge_connectivity_measures/output/merge_connectivity_measures.dta ../input
