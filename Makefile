@@ -14,8 +14,8 @@ task_13=indep_reg_top5/code
 task_14=indep_reg_rcma/code
 task_15=indep_reg_times/code
 task_16=sureg_times/code
-
-task_17=grapher/code
+task_17=event_studies/code
+task_18=grapher/code
 
 
 
