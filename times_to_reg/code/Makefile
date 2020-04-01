@@ -7,10 +7,10 @@ output = ../output/times_to_reg.dta
 
 all: $(dirs_symlinks) $(output)
 
-$(dirs_symlinks): create_dirs_symlinks.txt
+$(dirs_symlinks): create_dirs_symlinks.sh
 	-bash create_dirs_symlinks.sh
 	@echo "" > create_dirs_symlinks.txt
 
 
-$(output): times_to_reg.do $(stata_dta)
+$(output): times_to_reg.do $(stata_dta) run.sh
 	-bash run.sh

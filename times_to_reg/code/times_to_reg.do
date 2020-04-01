@@ -21,7 +21,7 @@ drop if jahr < 1947
 drop if jahr > 2015
 drop if mod(jahr,2) == 0
 bys gdenr (jahr): gen periode = _n
-xtset gdenr periode
+xtset gdenr jahr
 
 
 
