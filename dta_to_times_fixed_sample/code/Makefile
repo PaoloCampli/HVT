@@ -11,4 +11,4 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 
 
 $(output): .do $(stata_dta)
-	-bash run.sh
+	stata-mp -b do $<

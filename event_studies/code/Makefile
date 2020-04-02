@@ -10,5 +10,5 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 	@echo "" > create_dirs_symlinks.txt
 
 
-$(output): event_studies.do $(stata_dta)
-	-bash run.sh
+$(output): event_studies.do $(stata_dta) event_study_intensity_program.do
+	stata-mp -b do $<

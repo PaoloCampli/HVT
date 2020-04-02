@@ -11,4 +11,4 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 
 
 $(output): tt40_sumstats.do $(stata_dta)
-	-bash run.sh
+	stata-mp -b do $<

@@ -11,4 +11,4 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 
 
 $(output): make_panel_times.do $(stata_dta)
-	-bash run.sh
+	stata-mp -b do $<

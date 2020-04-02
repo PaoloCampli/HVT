@@ -8,4 +8,4 @@ dirs_symlinks: create_dirs_symlinks.sh
 	-bash create_dirs_symlinks.sh
 
 $(output): indep_reg_times.do $(stata_dta)
-	-bash run.sh
+	stata-mp -b do $<

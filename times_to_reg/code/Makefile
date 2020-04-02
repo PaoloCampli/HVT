@@ -13,4 +13,4 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 
 
 $(output): times_to_reg.do $(stata_dta) run.sh
-	-bash run.sh
+	stata-mp -b do $<

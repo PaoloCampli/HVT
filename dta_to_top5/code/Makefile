@@ -12,4 +12,4 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 
 
 $(output): dta_to_top5.do $(stata_dta)
-	-bash run.sh
+	stata-mp -b do $<
