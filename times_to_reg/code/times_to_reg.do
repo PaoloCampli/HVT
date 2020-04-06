@@ -21,7 +21,7 @@ drop if jahr < 1947
 drop if jahr > 2015
 drop if mod(jahr,2) == 0
 bys gdenr (jahr): gen periode = _n
-xtset gdenr jahr
+xtset gdenr periode
 
 
 
@@ -31,20 +31,6 @@ merge 1:1 gdenr jahr using "../input/clean_tax_bases.dta", keep(1 3) nogen
 merge 1:1 gdenr jahr using "../input/new_tax_data.dta", keep(1 3) nogen
 
 
-
-/*
-* Smoothed times
-foreach var in time_to_40 time_to_80 {
-	gen smooth_`var' = (`var' + L.`var')/2
-}
-
-rename (smooth_time_to_40 smooth_time_to_80) (tt40_sm tt80_sm)
-label var tt40_sm "2 years m.a. time_to_40"
-label var tt80_sm "2 years m.a. time_to_80"
-
-
-order time_to_40 time_to_80 tt40_sm tt80_sm, a(jahr)
-*/
 
 
 * from tt40_sumstat
@@ -57,7 +43,7 @@ order log_time_to_40 log_time_to_80, a(time_to_80)
 
 
 foreach var of varlist time_to_40-log_time_to_80 {
-	bysort gdenr: gen `var'_red = - D.`var'
+	bysort gdenr (periode): gen `var'_red = - D.`var'
 }
 
 

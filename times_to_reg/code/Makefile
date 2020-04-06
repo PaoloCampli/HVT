@@ -12,5 +12,5 @@ $(dirs_symlinks): create_dirs_symlinks.sh
 	@echo "" > create_dirs_symlinks.txt
 
 
-$(output): times_to_reg.do $(stata_dta) run.sh
+$(output): times_to_reg.do $(stata_dta)
 	stata-mp -b do $<
