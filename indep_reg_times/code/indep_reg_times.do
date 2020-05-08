@@ -29,7 +29,7 @@ local pop_vars 		"stpf_norm_under_p50 stpf_norm_p50_p75 stpf_norm_p75_p90 stpf_n
 local no_agglo		"zentren == 0 & agglomeration == 0"
 local dist_bands 	"in_zugang_p_5 in_zugang_p_10 in_zugang_p_15 in_zugang_p_20 in_zugang_p_30 1"
 
-local std_sample	"zentren == 0 & agglomeration == 0  & in_zugang_p_30 ==1 & obs == 1"
+local std_sample	"zentren == 0 & agglomeration == 0  & in_zugang_p_30 ==1"
 
 
 
