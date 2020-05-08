@@ -109,5 +109,4 @@ local events "event_zugang_p_10	event_top10_log_w_tttop5_red	event_top10_log_rcm
 *** run the program
 foreach event in `events' {
 	do event_study_intensity_program `event' -10 10 `sample' `dep_vars'
-	drop treat_year-balanced_sample 
 }

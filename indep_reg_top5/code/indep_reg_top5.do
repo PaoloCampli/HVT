@@ -12,12 +12,6 @@ macro drop _all         // clear all macros
 capture log close       // Close existing log files
 * --------------------------------------------------
 
-clear matrix
-cap clear mata
-set matsize 11000
-set maxvar 20000
-
-*cd /Users/paolocampli/hw/
 use "../input/merge_connectivity_measures.dta", clear
 
 

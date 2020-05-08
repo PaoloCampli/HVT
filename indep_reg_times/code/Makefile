@@ -1,6 +1,9 @@
 
 stata_dta = ../input/merge_connectivity_measures.dta
-output = ../output/ind_reg_noagglo_firms.tex
+output = ../output/ind_reg_std_sample_firms_tt40.tex \
+				../output/ind_reg_std_sample_tt40.tex \
+				../output/ind_reg_std_sample_noaccess_tt40.tex \
+
 
 all: dirs_symlinks $(output)
 

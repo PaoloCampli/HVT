@@ -5,9 +5,12 @@ version 14
 set more off
 capture log close
 
-* program takes arguments: an event (a stata variable) and two numbers, pre and post,
-* "pre" is intended as a negative integer (e.g. years before event), "post" is positive, 
-* plus locals for sample definition and dependent variables for regressions
+* program takes arguments: an event (a stata variable), two integers (pre and 
+* post, "pre" is intended as a negative integer, e.g. years before event, "post"  
+* is positive), and locals for sample definition and dependent variables for regs 
+* note: sample and dep_vars have to be specified with two double quotes in local def
+
+
 args event pre post sample dep_vars
 
 
@@ -154,7 +157,6 @@ forvalues y = `pre'(2)`post' {
 	local rows = "`rows' `y'"
 }
 
-macro li
 
 *** Output ***
 foreach var of varlist `dep_vars' {
@@ -202,3 +204,6 @@ foreach var of varlist `dep_vars' {
 	graph export "../output/`var'_pre`m_pre'_to`post'_`event'.pdf", replace
 
 }
+
+* drop all created vars, so it's possible to re-run the command 
+drop treat_year-balanced_sample 
