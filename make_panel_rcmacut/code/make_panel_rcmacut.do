@@ -45,9 +45,20 @@ order 	gdenr jahr
 sort  	gdenr jahr
 
 
-*merge 1:1 gdenr jahr using make_panel_rcma/input/clean_tax_bases.dta
-*keep if _merge == 3
-*drop _merge
+
+**** Some data analysis
+gen flag_rcma_year = 0
+sort gdenr jahr
+bys gdenr: replace flag_rcma_year = 1 if rcma[_n] < 0.99*rcma[_n-1] 
+bys gdenr: replace flag_rcma_year = 0 if _n == 1
+bys gdenr: egen flag_rcma_issue = max(flag_rcma_year)
+
+gen flag2 = 0
+sort gdenr jahr
+bys gdenr: replace flag2 = 1 if rcma[_N] < 1.05*rcma[1]
+drop if flag2 > 0
+drop flag2
+
 
 
 save "../output/make_panel_rcmacut.dta", replace

@@ -44,4 +44,17 @@ order 	gdenr jahr
 sort  	gdenr jahr
 
 
+**** Some data analysis
+gen flag_times_year = 0
+sort gdenr jahr
+bys gdenr: replace flag_times_year = 1 if time_to_40[_n] > 1.01*time_to_40[_n-1]
+bys gdenr: egen flag_times_issue = max(flag_times_year)
+
+gen flag2 = 0
+sort gdenr jahr
+bys gdenr: replace flag2 = 1 if time_to_40[_N] > time_to_40[1]
+drop if flag2 > 0
+drop flag2
+
+
 save "../output/make_panel_times.dta", replace

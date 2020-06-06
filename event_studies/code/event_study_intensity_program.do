@@ -1,13 +1,13 @@
-* Paolo Campli, USI
+* Paolo Campli, USI 2020
 *--------------------------------------------------
 
 version 14
 set more off
 capture log close
 
-* program takes arguments: an event (a stata variable), two integers (pre and 
-* post, "pre" is intended as a negative integer, e.g. years before event, "post"  
-* is positive), and locals for sample definition and dependent variables for regs 
+* program takes arguments: an event (a stata variable), two integers (pre and
+* post, "pre" is intended as a negative integer, e.g. years before event, "post"
+* is positive), and locals for sample definition and dependent variables for regs
 * note: sample and dep_vars have to be specified with two double quotes in local def
 
 
@@ -205,5 +205,5 @@ foreach var of varlist `dep_vars' {
 
 }
 
-* drop all created vars, so it's possible to re-run the command 
-drop treat_year-balanced_sample 
+* drop all created vars, so it's possible to re-run the command
+drop treat_year-balanced_sample
