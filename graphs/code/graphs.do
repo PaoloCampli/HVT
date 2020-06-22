@@ -36,3 +36,25 @@ separate diff_time_to_40, by(agglomeration) veryshortlabel
 scatter diff_time_to_401 diff_time_to_400 log_min_pop if diff_time_to_40 >0 ///
 	, sort ytitle("Cumulative drop in driving time") xtitle("Municipality initial size (log)") ///
 	msize(vsmall tiny) mcolor("gs13" "gs6") leg(off) graphregion(color(white))
+
+
+
+	*** Treatment dates, totals etc
+	gen treat_year = .
+	bys gdenr: replace treat_year 	= jahr if `event' > 0 & `event' < .
+	bys gdenr: egen first_treat 	= min(treat_year)
+	bys gdenr: egen last_treat 		= max(treat_year)
+	bys gdenr: egen tot_treat 		= total(treat_year/treat_year)
+			   egen cumul_treat		= total(treat_year/treat_year)
+	bys jahr:  egen events_per_year = total(treat_year/treat_year)
+	bys gdenr (jahr): gen events_bef_year 	= sum(events_per_year)
+	gen event_fraction 				= events_bef_year/cumul_treat
+
+
+	local sample "zentren == 0 & agglomeration == 0 & in_zugang_p_30 ==1"
+
+	*** Events graphs
+	twoway hist treat_year if `sample', bcolor(sandb) density yaxis(2) yscale(range(0) axis(1)) ///
+		|| line event_fraction jahr  if `sample', lcolor(black) sort yaxis(1) yscale(range(0) axis(1)) ///
+		, plotregion(fcolor(white)) graphregion(fcolor(white)) legend(off)
+	graph export ../output/`event'.pdf, replace

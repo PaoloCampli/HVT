@@ -102,8 +102,7 @@ local sample ""zentren == 0 & agglomeration == 0 & in_zugang_p_30 == 1""
 local dep_vars ""ln_stpf_norm_p90 	log_tax90""
 
 *** events over which we loop
-local events "event_zugang_p_10	event_top10_log_w_tttop5_red	event_top10_log_rcma_inc"
-
+local events "event_zugang_p_10 event_top10_log_w_tttop5_red	event_top10_log_rcma_inc"
 
 
 *** run the program

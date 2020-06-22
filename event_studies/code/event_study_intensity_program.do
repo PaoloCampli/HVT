@@ -5,7 +5,7 @@ version 14
 set more off
 capture log close
 
-* program takes arguments: an event (a stata variable), two integers (pre and
+* this program takes arguments: an event (a stata variable), two integers (pre and
 * post, "pre" is intended as a negative integer, e.g. years before event, "post"
 * is positive), and locals for sample definition and dependent variables for regs
 * note: sample and dep_vars have to be specified with two double quotes in local def
@@ -121,7 +121,7 @@ foreach var of varlist b_* {
 
 
 * Balancedness: we only show coefficients identified by all municipalities
-* if a municip has all zeros for some dummie, the max is 0
+* if a municip has all zeros for some dummy, the max is 0
 foreach var of varlist b_m`m_start'-b_`end' {
 	bys gdenr: egen max_`var' = max(`var')
 }
@@ -129,6 +129,17 @@ gen balanced_sample = 1
 foreach var of varlist max_b_m`m_start'-max_b_`end' {
 	replace balanced_sample = balanced_sample*`var'
 }
+
+* Graph number of units which contribute to identify each dummy
+bysort gdenr: gen n_municip = _n == 1
+foreach var of varlist max_b_m`m_start'-max_b_`end' {
+	replace `var' = n_municip*`var'
+}
+foreach var of varlist max_b_m`m_start'-max_b_`end' {
+	replace `var' = . if `var' == 0
+}
+graph bar (count) max_b_m`m_start'-max_b_`end' 
+graph export "../output/identifying_pre`m_pre'_to`post'_`event'.pdf", replace
 
 
 * -----------------------------------------
@@ -206,4 +217,4 @@ foreach var of varlist `dep_vars' {
 }
 
 * drop all created vars, so it's possible to re-run the command
-drop treat_year-balanced_sample
+drop treat_year-n_municip
