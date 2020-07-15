@@ -17,6 +17,8 @@ clear matrix
 cap clear mata
 set matsize 11000
 set maxvar 20000
+ssc install mmat2tex
+
 
 *cd /Users/paolocampli/hw
 use "../input/merge_connectivity_measures.dta", clear
@@ -46,12 +48,12 @@ timer on 1
 ***** Sureg 4 income classes *****
 
 qui{
-sureg 	(eq1: ln_stpf_norm_p90 			`ln_time40'		 i.gdenr i.jahr) ///
-		(eq2: ln_stpf_norm_p75_p90 		`ln_time40'		 i.gdenr i.jahr) ///
-		(eq3: ln_stpf_norm_p50_p75 		`ln_time40'		 i.gdenr i.jahr) ///
-		(eq4: ln_stpf_norm_under_p50 	`ln_time40'		 i.gdenr i.jahr) ///
-		(eq5: log_tax90			 		`ln_time40'		 i.gdenr i.jahr##i.kannr) ///
-	if `std_sample'
+sureg 	(eq1: ln_stpf_norm_p90 				`ln_time40'		 i.gdenr i.jahr) ///
+				(eq2: ln_stpf_norm_p75_p90 		`ln_time40'		 i.gdenr i.jahr) ///
+				(eq3: ln_stpf_norm_p50_p75 		`ln_time40'		 i.gdenr i.jahr) ///
+				(eq4: ln_stpf_norm_under_p50 	`ln_time40'		 i.gdenr i.jahr) ///
+				(eq5: log_tax90			 					`ln_time40'		 i.gdenr i.jahr##i.kannr) ///
+				if `std_sample'
 }
 
 timer off 1
@@ -82,6 +84,10 @@ mat pi = (pi,_b[eq5:ln_time_to_40])
 mat pi = pi[1,2...] // discards the first 0
 mat mt = pi*0 // Creates a matrix "mt" with the same dimensions as pi but filled with zeros
 }
+
+mat li pi
+mata mat_pi = st_matrix("pi")
+mmat2tex mat_pi using "../output/4_classes_coeff.tex", replace
 
 
 
@@ -114,11 +120,13 @@ mat V = (V, Vt ["eq5:ln_time_to_40", "eq5:ln_time_to_40"])
 mat V = V[1,2...]
 
 
-		mata: st_matrix("V", rowshape( st_matrix("V")', 5) ) // This takes the vector and puts it in matrix form
-		mat li V
+mata: st_matrix("V", rowshape( st_matrix("V")', 5) ) // This takes the vector and puts it in matrix form
+mat li V
 
-	local N = e(N)
+local N = e(N)
 
+mata mat_V = st_matrix("V")
+mmat2tex mat_V using "../output/4_classes_variance.tex", replace
 
 
 
@@ -273,6 +281,7 @@ foreach i in mean_stpf_p90 mean_stpf_u_p90 {
 
 */
 
+/*
 
 run "../../structural_estimation/code/structural_estimation.do"
 

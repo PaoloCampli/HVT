@@ -9,10 +9,12 @@ capture log close
 * post, "pre" is intended as a negative integer, e.g. years before event, "post"
 * is positive), and locals for sample definition and dependent variables for regs
 * note: sample and dep_vars have to be specified with two double quotes in local def
+* an optional argument is the var_name of the time variable of interest
 
 
-args event pre post sample dep_vars
+args event pre post sample dep_vars time_var
 
+cap rename `time_var' jahr
 
 qui: sum jahr
 local init_year = r(min)
